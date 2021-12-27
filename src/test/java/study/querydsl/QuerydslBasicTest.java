@@ -425,4 +425,24 @@ public class QuerydslBasicTest {
         return (ageCond != null) ? member.age.eq(ageCond) : null;
     }
 
+    private BooleanExpression allEq(String usernameCond, Integer ageCond) {
+        return usernameEq(usernameCond).and(ageEq(ageCond));
+    }
+
+    @Test
+    public void bulkUpdate() throws Exception {
+        long count = queryFactory.update(member)
+                                 .set(member.username, "비회원")
+                                 .where(member.age.lt(28))
+                                 .execute();
+        em.flush();
+        em.clear();
+
+        List<Member> members = queryFactory.select(member)
+                                           .fetch();
+
+        for (Member member1 : members) {
+            System.out.println(member1);
+        }
+    }
 }
