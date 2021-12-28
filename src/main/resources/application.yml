@@ -3,6 +3,9 @@ spring:
     ansi:
       enabled: always
 
+  profiles:
+    active: local
+
   datasource:
     url: jdbc:h2:tcp://localhost/~/querydsl
     username: sa
